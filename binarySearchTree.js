@@ -77,16 +77,84 @@ class BinarySearchTree {
             }    
         }
     }
+
+    breathFirstSearch() {
+        let data = [],
+            queue = [],
+            node = this.root
+
+        queue.push(node)
+
+        while(queue.length) {
+            node = queue.shift()
+            data.push(node)
+
+            if(node.left) {
+                queue.push(node.left)
+            }
+            if(node.right) {
+                queue.push(node.right)
+            }
+        }
+
+        return data
+    }
+
+    depthFirstSearch() {
+        let visited = [],
+            current = this.root
+
+        function traversal(node) {
+            visited.push(node)
+            if (node.left) {
+                traversal(node.left)
+            }
+            if (node.right) {
+                traversal(node.right)
+            }
+        }
+        traversal(current)
+        return visited
+    }
+
+    depthFirstSearchPostOrder() {
+        let visited = []
+
+        function traversal(node) {
+            if (node.left) {
+                traversal(node.left)
+            }
+            if(node.right) {
+                traversal(node.right)
+            }
+            visited.push(node.value)
+        }
+        traversal(this.root)
+        return visited
+    }
+
+    depthFirstSearchInOrder() {
+        let visited = []
+
+        function traversal(node) {
+            node.left && traversal(node.left)
+            visited.push(node.value)
+            node.right && traversal(node.right)
+        }
+        traversal(this.root)
+        return visited
+    }
 }
 
 let tree = new BinarySearchTree()
-tree.insert(20)
 tree.insert(10)
-tree.insert(130)
+tree.insert(20)
+tree.insert(8)
 tree.insert(2)
+tree.insert(13)
+tree.insert(17)
+tree.insert(24)
 
-console.log(tree.find(110))
 
-
-console.log(tree.find(20))
+console.log(tree.depthFirstSearchInOrder())
 
